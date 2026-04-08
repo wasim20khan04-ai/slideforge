@@ -15,12 +15,24 @@ const MANAGED_STYLE_KEYS: Array<keyof CSSStyleDeclaration> = [
     'animationIterationCount',
 ];
 
+const BASE_DESCRIPTION_OPACITY = 0.85;
+
 export interface ExportFrameDiagnostics {
-    textIntroProgress: number;
-    textIntroOpacity: number;
+    titleIntroProgress: number;
+    titleOpacity: number;
+    descriptionOpacity: number;
 }
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+
+const resolveOpacity = (v: CSSProperties['opacity'], fallback = 1) => {
+    if (typeof v === 'number') return v;
+    if (typeof v === 'string') {
+        const parsed = Number.parseFloat(v);
+        return Number.isFinite(parsed) ? parsed : fallback;
+    }
+    return fallback;
+};
 
 const applyStyle = (element: HTMLElement | null, style: CSSProperties) => {
     if (!element) return;
@@ -118,55 +130,56 @@ export const applyExportFrameState = (
     elapsedSeconds: number
 ): ExportFrameDiagnostics => {
     const durationSeconds = slide.duration || 5;
-    const introTextProgress = getPhaseProgress(elapsedSeconds, durationSeconds, slide.textTransitionDuration ?? 1, 'intro');
-    const outroTextProgress = getPhaseProgress(elapsedSeconds, durationSeconds, slide.textOutroDuration ?? 1, 'outro');
-    const introImageProgress = getPhaseProgress(elapsedSeconds, durationSeconds, slide.imageTransitionDuration ?? 1, 'intro');
-    const outroImageProgress = getPhaseProgress(elapsedSeconds, durationSeconds, slide.imageOutroDuration ?? 1, 'outro');
+    const titleIntroProgress = getPhaseProgress(elapsedSeconds, durationSeconds, slide.textTransitionDuration ?? 1, 'intro');
+    const textOutroProgress = getPhaseProgress(elapsedSeconds, durationSeconds, slide.textOutroDuration ?? 1, 'outro');
+    const imageIntroProgress = getPhaseProgress(elapsedSeconds, durationSeconds, slide.imageTransitionDuration ?? 1, 'intro');
+    const imageOutroProgress = getPhaseProgress(elapsedSeconds, durationSeconds, slide.imageOutroDuration ?? 1, 'outro');
 
-    const textIntro = exportContainer.querySelector('[data-export-role="text-intro"]') as HTMLElement | null;
-    const textOutro = exportContainer.querySelector('[data-export-role="text-outro"]') as HTMLElement | null;
-    const imageIntro = exportContainer.querySelector('[data-export-role="image-intro"]') as HTMLElement | null;
-    const imageOutro = exportContainer.querySelector('[data-export-role="image-outro"]') as HTMLElement | null;
+    const titleIntroTarget = exportContainer.querySelector('[data-export-role="title-intro-target"]') as HTMLElement | null;
+    const descriptionIntroTarget = exportContainer.querySelector('[data-export-role="description-intro-target"]') as HTMLElement | null;
+    const textOutroTarget = exportContainer.querySelector('[data-export-role="text-outro"]') as HTMLElement | null;
+    const imageIntroTarget = exportContainer.querySelector('[data-export-role="image-intro"]') as HTMLElement | null;
+    const imageOutroTarget = exportContainer.querySelector('[data-export-role="image-outro"]') as HTMLElement | null;
 
     const isFirstFrame = elapsedSeconds <= 0.0001;
     const isLastFrame = elapsedSeconds >= (durationSeconds - 0.0001);
 
-    const textIntroStyle = applyVisibilityPolicy(
-        getTransitionStyle(slide.textTransition ?? 'slide-up', 'intro', introTextProgress),
+    const introStyle = applyVisibilityPolicy(
+        getTransitionStyle(slide.textTransition ?? 'slide-up', 'intro', titleIntroProgress),
         isFirstFrame,
         slide.skipTextEnterVisibility
     );
+    const titleOpacity = resolveOpacity(introStyle.opacity, 1);
+    const descriptionStyle: CSSProperties = {
+        ...introStyle,
+        opacity: titleOpacity * BASE_DESCRIPTION_OPACITY,
+    };
+
     const textOutroStyle = applyVisibilityPolicy(
-        getTransitionStyle(slide.textOutroTransition ?? 'none', 'outro', outroTextProgress),
+        getTransitionStyle(slide.textOutroTransition ?? 'none', 'outro', textOutroProgress),
         isLastFrame,
         slide.skipTextExitVisibility
     );
     const imageIntroStyle = applyVisibilityPolicy(
-        getTransitionStyle(slide.imageTransition ?? 'zoom-in', 'intro', introImageProgress),
+        getTransitionStyle(slide.imageTransition ?? 'zoom-in', 'intro', imageIntroProgress),
         isFirstFrame,
         slide.skipImageEnterVisibility
     );
     const imageOutroStyle = applyVisibilityPolicy(
-        getTransitionStyle(slide.imageOutroTransition ?? 'none', 'outro', outroImageProgress),
+        getTransitionStyle(slide.imageOutroTransition ?? 'none', 'outro', imageOutroProgress),
         isLastFrame,
         slide.skipImageExitVisibility
     );
 
-    applyStyle(textIntro, textIntroStyle);
-    applyStyle(textOutro, textOutroStyle);
-    applyStyle(imageIntro, imageIntroStyle);
-    applyStyle(imageOutro, imageOutroStyle);
-
-    const resolvedOpacity = textIntroStyle.opacity;
-    const textIntroOpacity =
-        typeof resolvedOpacity === 'number'
-            ? resolvedOpacity
-            : typeof resolvedOpacity === 'string'
-                ? Number.parseFloat(resolvedOpacity) || 1
-                : 1;
+    applyStyle(titleIntroTarget, introStyle);
+    applyStyle(descriptionIntroTarget, descriptionStyle);
+    applyStyle(textOutroTarget, textOutroStyle);
+    applyStyle(imageIntroTarget, imageIntroStyle);
+    applyStyle(imageOutroTarget, imageOutroStyle);
 
     return {
-        textIntroProgress: introTextProgress,
-        textIntroOpacity,
+        titleIntroProgress,
+        titleOpacity,
+        descriptionOpacity: resolveOpacity(descriptionStyle.opacity, BASE_DESCRIPTION_OPACITY),
     };
 };

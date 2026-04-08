@@ -273,11 +273,12 @@ export const useExportManager = (
                     if (exportContainerRef.current) {
                         try {
                             const frameState = applyExportFrameState(exportContainerRef.current, slide, elapsedSeconds);
-                            if ((i < 3 || i % 10 === 0) && i <= 75) {
+                            if ((i < 3 || i % 10 === 0) && i <= 60) {
                                 addLog(
                                     `[DBG ${slide.badge}] f=${i} t=${elapsedSeconds.toFixed(3)} ` +
-                                    `textP=${frameState.textIntroProgress.toFixed(3)} ` +
-                                    `textOp=${frameState.textIntroOpacity.toFixed(3)}`
+                                    `titleP=${frameState.titleIntroProgress.toFixed(3)} ` +
+                                    `titleOp=${frameState.titleOpacity.toFixed(3)} ` +
+                                    `descOp=${frameState.descriptionOpacity.toFixed(3)}`
                                 );
                             }
 

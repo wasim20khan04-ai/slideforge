@@ -207,7 +207,7 @@ const SlideRenderer: React.FC<SlideRendererProps> = ({
         <>
             {/* Text Section */}
             <div className={textContainerClasses} style={textOutroStyle} data-export-role="text-outro">
-                <div className={`${useExportFrameInjection ? '' : 'anim-content'} w-full ${textIntroClass}`} style={textIntroStyle} data-export-role="text-intro">
+                <div className={`${useExportFrameInjection ? '' : 'anim-content'} w-full ${textIntroClass}`} style={textIntroStyle}>
                     <span 
                         className={badgeClasses} 
                         style={{ fontSize: badgeFontSize ? `${badgeFontSize}px` : 'var(--slide-badge-size)' }}
@@ -216,16 +216,18 @@ const SlideRenderer: React.FC<SlideRendererProps> = ({
                     </span>
                     
                     {/* Wrapped Title for Smooth Scaling */}
-                    <div className="pulsate-wrapper mb-10 max-w-full" style={pulseWrapperStyle}>
-                        <h1 className="slide-title font-bold leading-[1.1] whitespace-pre-wrap" style={titleStyle} data-export-role="title">
-                            {title}
-                        </h1>
+                    <div className="mb-10 max-w-full" data-export-role="title-intro-target">
+                        <div className="pulsate-wrapper max-w-full" style={pulseWrapperStyle}>
+                            <h1 className="slide-title font-bold leading-[1.1] whitespace-pre-wrap" style={titleStyle}>
+                                {title}
+                            </h1>
+                        </div>
                     </div>
 
                     <p 
                         className={descClasses} 
                         style={{ fontSize: descriptionFontSize ? `${descriptionFontSize}px` : 'var(--slide-desc-size)' }}
-                        data-export-role="description"
+                        data-export-role="description-intro-target"
                     >
                         {description}
                     </p>
