@@ -5,6 +5,7 @@ import { SlideData, ExportJob } from '../types';
 import * as Mp4Muxer from 'mp4-muxer';
 import { toCanvas } from 'html-to-image';
 import JSZip from 'jszip';
+import { applyExportFrameState } from './exportFrameState';
 
 export const useExportManager = (
     slides: SlideData[], 
@@ -185,6 +186,10 @@ export const useExportManager = (
         // Increase bitrate slightly for higher frame rates to maintain per-frame quality
         if (FPS === 60) baseBitrate *= 1.5;
         bitRate = baseBitrate;
+        if (cfgFormat === 'mp4' && cfgQuality === '1080p' && cfgFps === 60 && cfgBitrate === 'medium') {
+            bitRate = Math.max(bitRate, 10_000_000);
+            addLog('Adjusted bitrate floor for 1080p60 medium to preserve low-opacity transition frames.');
+        }
 
         let muxer: Mp4Muxer.Muxer<Mp4Muxer.ArrayBufferTarget> | null = null;
         let videoEncoder: VideoEncoder | null = null;
@@ -257,6 +262,7 @@ export const useExportManager = (
 
                 for (let i = 0; i < frames; i++) {
                     const prog = (frames > 1) ? (i / (frames - 1)) * 100 : 0;
+                    const elapsedSeconds = i / FPS;
                     flushSync(() => {
                         setExportRenderProgress(prog);
                         // Use (globalFrameCount - 1) for progress calculation to start at 0%
@@ -266,6 +272,15 @@ export const useExportManager = (
 
                     if (exportContainerRef.current) {
                         try {
+                            const frameState = applyExportFrameState(exportContainerRef.current, slide, elapsedSeconds);
+                            if ((i < 3 || i % 10 === 0) && i <= 75) {
+                                addLog(
+                                    `[DBG ${slide.badge}] f=${i} t=${elapsedSeconds.toFixed(3)} ` +
+                                    `textP=${frameState.textIntroProgress.toFixed(3)} ` +
+                                    `textOp=${frameState.textIntroOpacity.toFixed(3)}`
+                                );
+                            }
+
                             // --- MANUAL PULSE SYNC FOR EXPORT ---
                             // We must calculate what the scale would be at this specific timestamp
                             // to ensure the export has continuous pulsing like the live preview.
