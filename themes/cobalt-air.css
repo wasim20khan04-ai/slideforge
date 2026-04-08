@@ -1,0 +1,76 @@
+/* ============================================
+   File: cobalt-air.css (Light Mode)
+   ============================================ */
+.theme-cobalt-air {
+    background-color: #ffffff;
+    background-image: radial-gradient(circle at 100% 100%, #eff6ff 0%, #ffffff 100%);
+    color: #0f172a;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: #2563eb; /* Blue 600 */
+}
+
+/* Sharp Corporate Badge */
+.theme-cobalt-air .badge {
+    background: #2563eb;
+    color: #ffffff;
+    border-radius: 0;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    box-shadow: calc(4px * var(--badge-shadow-scale, 1)) calc(4px * var(--badge-shadow-scale, 1)) 0px rgba(37, 99, 235, 0.2);
+}
+
+.theme-cobalt-air .slide-title {
+    color: #1e3a8a; /* Blue 900 */
+    font-weight: 800;
+}
+
+.theme-cobalt-air .slide-description {
+    color: #475569;
+    border-left: 2px solid #bfdbfe;
+    padding-left: 1rem;
+}
+
+/* Clean Professional Image */
+.theme-cobalt-air .slide-image {
+    box-sizing: border-box;
+    border-radius: 0;
+    box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.15);
+    border: 1px solid #e2e8f0;
+}
+
+.theme-cobalt-air .slide-visual-wrapper {
+    border-radius: 0;
+}
+
+/* Deco 1: Side Panel */
+.theme-cobalt-air .theme-deco-slide-1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 100%;
+    background: #eff6ff;
+    border-left: 1px solid #dbeafe;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Deco 2: Dot Grid */
+.theme-cobalt-air .theme-deco-slide-2 {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    width: 100px;
+    height: 100px;
+    background-image: radial-gradient(#93c5fd 2px, transparent 2px);
+    background-size: 20px 20px;
+    z-index: 0;
+    pointer-events: none;
+}

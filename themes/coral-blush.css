@@ -1,0 +1,73 @@
+/* ============================================
+   File: coral-blush.css (Light Mode)
+   ============================================ */
+.theme-coral-blush {
+    background-color: #fffbfb;
+    background-image: linear-gradient(to bottom right, #fff1f2, #ffedd5);
+    color: #4c0519;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: #f43f5e; /* Rose 500 */
+}
+
+/* Offset Shadow Badge */
+.theme-coral-blush .badge {
+    background: #ffe4e6;
+    color: #e11d48;
+    border-radius: 4px;
+    border: 1px solid #fecdd3;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    box-shadow: calc(3px * var(--badge-shadow-scale, 1)) calc(3px * var(--badge-shadow-scale, 1)) 0px #fda4af;
+    transition: box-shadow 0.2s ease;
+}
+
+.theme-coral-blush .slide-title {
+    color: #881337;
+}
+
+.theme-coral-blush .slide-description {
+    color: #9f1239;
+    opacity: 0.9;
+}
+
+/* Offset Shadow Image */
+.theme-coral-blush .slide-image {
+    box-sizing: border-box;
+    border-radius: 8px;
+    box-shadow: -15px 15px 0px #ffe4e6;
+    border: 2px solid #fecdd3;
+}
+
+.theme-coral-blush .slide-visual-wrapper {
+    border-radius: 8px;
+}
+
+/* Deco 1: Striped Circle */
+.theme-coral-blush .theme-deco-slide-1 {
+    position: absolute;
+    top: 5%;
+    right: 10%;
+    width: 150px;
+    height: 150px;
+    background: repeating-linear-gradient(45deg, #fecdd3, #fecdd3 2px, transparent 2px, transparent 8px);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Deco 2: Soft Coral Circle */
+.theme-coral-blush .theme-deco-slide-2 {
+    position: absolute;
+    bottom: 10%;
+    left: -5%;
+    width: 300px;
+    height: 300px;
+    background: #ffe4e6;
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}

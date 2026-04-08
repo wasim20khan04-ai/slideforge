@@ -1,0 +1,72 @@
+
+.theme-rose-gold-luxury {
+    background-color: #ffffff;
+    background-image: radial-gradient(circle at 100% 0%, #fff1f2 0%, #ffffff 100%);
+    color: #881337; /* Rose-900 */
+    text-align: left;
+    position: relative;
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: #d4af37; /* Gold */
+}
+
+/* Elegant Outline Badge */
+.theme-rose-gold-luxury .badge {
+    background: white;
+    color: #9f1239;
+    border: 1px solid #fda4af;
+    border-radius: 4px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    padding: 0.6rem 2rem;
+    /* Soft Rose Glow */
+    box-shadow: 0 10px calc(25px * var(--badge-shadow-scale, 1)) -5px rgba(244, 63, 94, 0.2);
+}
+
+.theme-rose-gold-luxury .slide-title {
+    background: linear-gradient(45deg, #be123c, #fb7185);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 300; /* Lighter weight for luxury */
+}
+
+.theme-rose-gold-luxury .slide-description {
+    color: #9f1239;
+    line-height: 1.8;
+}
+
+/* Soft framed image */
+.theme-rose-gold-luxury .slide-image {
+    border: 8px solid white;
+    box-shadow: 0 20px 40px rgba(190, 18, 60, 0.15);
+    border-radius: 8px;
+}
+
+.theme-rose-gold-luxury .slide-visual-wrapper {
+    border-radius: 8px;
+}
+
+/* Deco 1: Gold Circle */
+.theme-rose-gold-luxury .theme-deco-slide-1 {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    border: 2px solid rgba(212, 175, 55, 0.3); /* Gold */
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Deco 2: Soft Gradient Wash */
+.theme-rose-gold-luxury .theme-deco-slide-2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(251, 113, 133, 0.1), transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+}

@@ -1,0 +1,83 @@
+
+/* ============================================
+   File: brutal-concrete.css (Light Mode)
+   ============================================ */
+.theme-brutal-concrete {
+    background-color: #ebebeb;
+    color: #1a1a1a;
+    text-align: left;
+    position: relative;
+    /* Noise texture simulation */
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, 0.02) 0px,
+        rgba(0, 0, 0, 0.02) 1px,
+        transparent 1px,
+        transparent 10px
+    );
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: #84cc16; /* Lime-500 */
+}
+
+/* Acid Green Accent Badge with Hard Shadow */
+.theme-brutal-concrete .badge {
+    background-color: #84cc16; /* Lime-500 */
+    color: #000000;
+    font-weight: 800;
+    border-radius: 0;
+    border: 2px solid #84cc16;
+    /* Hard Shadow with Pulse (Scaling Offsets) */
+    box-shadow: 
+        calc(6px * var(--badge-shadow-scale, 1)) calc(6px * var(--badge-shadow-scale, 1)) 0px rgba(0, 0, 0, 0.15);
+}
+
+.theme-brutal-concrete .slide-title {
+    color: #0a0a0a;
+    text-transform: uppercase;
+}
+
+.theme-brutal-concrete .slide-description {
+    color: #404040;
+    font-family: monospace; /* Force mono feel for description */
+    background: rgba(0, 0, 0, 0.04);
+    padding: 1rem;
+    border-left: 4px solid #84cc16;
+}
+
+/* Clean Image */
+.theme-brutal-concrete .slide-image {
+    box-sizing: border-box;
+    border-radius: 0;
+    filter: grayscale(20%) contrast(110%);
+    box-shadow: 15px 15px 0px rgba(0, 0, 0, 0.1);
+}
+
+.theme-brutal-concrete .slide-visual-wrapper {
+    border-radius: 0;
+}
+
+/* Deco 1: Massive Geometric Block */
+.theme-brutal-concrete .theme-deco-slide-1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100%;
+    background-color: #e0e0e0;
+    z-index: 0;
+    border-left: 1px solid #d0d0d0;
+}
+
+/* Deco 2: Technical Crosshairs */
+.theme-brutal-concrete .theme-deco-slide-2 {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    width: 40px;
+    height: 40px;
+    background: 
+        linear-gradient(#84cc16 2px, transparent 2px) center/100% 100% no-repeat,
+        linear-gradient(90deg, #84cc16 2px, transparent 2px) center/100% 100% no-repeat;
+    z-index: 0;
+}

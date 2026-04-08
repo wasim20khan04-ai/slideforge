@@ -1,0 +1,73 @@
+
+/* ============================================
+   File: ceramic-clean.css (Light Mode — already light, refined)
+   ============================================ */
+.theme-ceramic-clean {
+    background-color: #F5F5F7; /* Apple-style light grey */
+    color: #1D1D1F;
+    text-align: left;
+    position: relative;
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: #86868b; /* Soft Grey */
+}
+
+/* Soft, Neumorphic Badge with Soft Shadow */
+.theme-ceramic-clean .badge {
+    background-color: #ffffff;
+    color: #86868b;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    font-weight: 600;
+    /* Soft Shadow with Pulse */
+    box-shadow: 0 calc(8px * var(--badge-shadow-scale, 1)) calc(20px * var(--badge-shadow-scale, 1)) rgba(0, 0, 0, 0.08);
+}
+
+.theme-ceramic-clean .slide-title {
+    color: #1D1D1F;
+    letter-spacing: -0.01em;
+}
+
+.theme-ceramic-clean .slide-description {
+    color: #86868b;
+    line-height: 1.6;
+}
+
+/* Clean Image */
+.theme-ceramic-clean .slide-image {
+    box-sizing: content-box;
+    border-radius: 24px;
+    box-shadow: 
+        0 20px 40px -10px rgba(0, 0, 0, 0.15), 
+        0 0 0 1px rgba(0, 0, 0, 0.02); /* Subtle outline */
+}
+
+.theme-ceramic-clean .slide-visual-wrapper {
+    border-radius: 24px;
+}
+
+/* Deco 1: Soft Pastel Gradient Blob */
+.theme-ceramic-clean .theme-deco-slide-1 {
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(200, 210, 255, 0.4), transparent 70%);
+    filter: blur(60px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Deco 2: Second Soft Blob */
+.theme-ceramic-clean .theme-deco-slide-2 {
+    position: absolute;
+    bottom: -20%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 220, 200, 0.4), transparent 70%);
+    filter: blur(60px);
+    z-index: 0;
+    pointer-events: none;
+}

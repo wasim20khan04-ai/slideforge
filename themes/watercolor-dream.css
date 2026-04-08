@@ -1,0 +1,73 @@
+
+.theme-watercolor-dream {
+    background-color: #ffffff;
+    color: #4c1d95; /* Violet-900 */
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: #c084fc; /* Violet-400 */
+}
+
+/* Soft Wash Badge */
+.theme-watercolor-dream .badge {
+    background: linear-gradient(120deg, #e9d5ff, #fbcfe8);
+    color: #6b21a8;
+    border: none;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    padding: 0.7rem 2rem;
+    font-weight: 600;
+    /* Soft diffuse glow */
+    box-shadow: 0 0 calc(20px * var(--badge-shadow-scale, 1)) rgba(192, 132, 252, 0.4);
+}
+
+.theme-watercolor-dream .slide-title {
+    color: #1e1b4b;
+    background: linear-gradient(90deg, #1e1b4b, #4c1d95);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.theme-watercolor-dream .slide-description {
+    color: #5b21b6;
+}
+
+/* Soft Edge Image */
+.theme-watercolor-dream .slide-image {
+    box-sizing: content-box;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px -10px rgba(76, 29, 149, 0.2);
+}
+
+.theme-watercolor-dream .slide-visual-wrapper {
+    border-radius: 20px;
+}
+
+/* Deco 1: Blue Watercolor Splash */
+.theme-watercolor-dream .theme-deco-slide-1 {
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.2), transparent 60%);
+    filter: blur(50px);
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Deco 2: Pink Watercolor Splash */
+.theme-watercolor-dream .theme-deco-slide-2 {
+    position: absolute;
+    bottom: -10%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(244, 114, 182, 0.2), transparent 60%);
+    filter: blur(50px);
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    z-index: 0;
+    pointer-events: none;
+}

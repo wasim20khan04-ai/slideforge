@@ -1,0 +1,74 @@
+/* ============================================
+   File: arctic-frost.css (Light Mode)
+   ============================================ */
+.theme-arctic-frost {
+    background-color: #f8fafc;
+    background-image: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    color: #0f172a;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: #0284c7; /* Sky 600 */
+}
+
+/* Frosted Glass Badge */
+.theme-arctic-frost .badge {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #0284c7;
+    border: 1px solid #bae6fd;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    box-shadow: 0 4px calc(15px * var(--badge-shadow-scale, 1)) rgba(2, 132, 199, 0.1);
+}
+
+.theme-arctic-frost .slide-title {
+    color: #0c4a6e; /* Sky 900 */
+    letter-spacing: -0.02em;
+}
+
+.theme-arctic-frost .slide-description {
+    color: #334155;
+    font-weight: 300;
+}
+
+/* Crisp Image */
+.theme-arctic-frost .slide-image {
+    box-sizing: border-box;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(2, 132, 199, 0.08);
+    border: 4px solid white;
+}
+
+.theme-arctic-frost .slide-visual-wrapper {
+    border-radius: 16px;
+}
+
+/* Deco 1: Soft Cold Flare */
+.theme-arctic-frost .theme-deco-slide-1 {
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(186, 230, 253, 0.4), transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Deco 2: Sharp Icy Geometric */
+.theme-arctic-frost .theme-deco-slide-2 {
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    width: 300px;
+    height: 300px;
+    border: 1px solid rgba(2, 132, 199, 0.1);
+    transform: rotate(45deg);
+    z-index: 0;
+    pointer-events: none;
+}

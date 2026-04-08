@@ -1,0 +1,175 @@
+
+:root {
+    /* "Modern Sans" Defaults acting as the Source of Truth */
+    --slide-badge-size: 48px;
+    --slide-title-size: 84px;
+    --slide-desc-size: 45px;
+    --slide-img-max-height: 900px;
+}
+
+/* 1. Modern Sans (Default) - Clean, standard, readable */
+.typography-modern-sans .slide-title {
+    font-family: 'Inter', sans-serif;
+    text-transform: none;
+}
+.typography-modern-sans .slide-description {
+    font-family: 'Inter', sans-serif;
+}
+.typography-modern-sans .badge {
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* 2. Elegant Serif - Sophisticated, editorial look */
+.typography-elegant-serif .slide-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+.typography-elegant-serif .slide-description {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0.01em;
+}
+.typography-elegant-serif .badge {
+    font-family: 'Inter', sans-serif; /* Keep badge legible */
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+/* 3. Tech Mono - Coding, technical, robotic */
+.typography-tech-mono .slide-title {
+    font-family: 'Space Mono', monospace;
+    letter-spacing: -0.05em;
+    text-transform: lowercase; /* Stylistic choice for tech */
+}
+.typography-tech-mono .slide-description {
+    font-family: 'Space Mono', monospace;
+    line-height: 1.8;
+}
+.typography-tech-mono .badge {
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+}
+
+/* 4. Bold Geometric - Impactful, loud, modern */
+.typography-bold-caps .slide-title {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1;
+}
+.typography-bold-caps .slide-description {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+.typography-bold-caps .badge {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* 5. Retro Script - Relaxed, vintage, handwritten feel */
+.typography-retro-script .slide-title {
+    font-family: 'Satisfy', cursive;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0.02em;
+}
+.typography-retro-script .slide-description {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+.typography-retro-script .badge {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+/* 6. Condensed Impact - Strong, tall, magazine header style */
+.typography-condensed-impact .slide-title {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+}
+.typography-condensed-impact .slide-description {
+    font-family: 'Inter', sans-serif;
+}
+.typography-condensed-impact .badge {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* 7. Classic Slab - Solid, academic, trustworthy */
+.typography-classic-slab .slide-title {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 700;
+}
+.typography-classic-slab .slide-description {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 400;
+    line-height: 1.6;
+}
+.typography-classic-slab .badge {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* 8. Futuristic Sci-Fi - Alien, space, high-tech */
+.typography-futuristic .slide-title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+.typography-futuristic .slide-description {
+    font-family: 'Inter', sans-serif; /* Keep body readable */
+    letter-spacing: 0.05em;
+}
+.typography-futuristic .badge {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    /* Removed font-size scaling to link with Modern Sans */
+}
+
+/* 9. Creative Marker - Hand-drawn, energetic, playful */
+.typography-marker .slide-title {
+    font-family: 'Permanent Marker', cursive;
+    transform: rotate(-1deg);
+    line-height: 1.2;
+}
+.typography-marker .slide-description {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+.typography-marker .badge {
+    font-family: 'Permanent Marker', cursive;
+    letter-spacing: 0.05em;
+}
+
+/* 10. Cinematic Epic - History, movie poster, grandeur */
+.typography-cinematic .slide-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+.typography-cinematic .slide-description {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+}
+.typography-cinematic .badge {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+}

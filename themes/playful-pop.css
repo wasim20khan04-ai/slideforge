@@ -1,0 +1,72 @@
+
+.theme-playful-pop {
+    background-color: #ffffff;
+    color: #1e3a8a; /* Blue-900 */
+    text-align: left;
+    position: relative;
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: #ef4444; /* Red-500 */
+}
+
+/* Fun Bubble Badge */
+.theme-playful-pop .badge {
+    background-color: #3b82f6; /* Blue-500 */
+    color: white;
+    border: none;
+    border-radius: 20px 20px 20px 0;
+    font-weight: 800;
+    padding: 0.8rem 1.5rem;
+    transform: rotate(-3deg);
+    /* Pop Shadow Pulse */
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+}
+
+.theme-playful-pop .slide-title {
+    color: #1e3a8a;
+    letter-spacing: -0.03em;
+}
+
+.theme-playful-pop .slide-description {
+    color: #1d4ed8;
+    font-weight: 500;
+}
+
+/* Wobbly Image */
+.theme-playful-pop .slide-image {
+    box-sizing: content-box;
+    border: 4px solid #fff;
+    border-radius: 20px 40px 30px 50px;
+    box-shadow: 8px 8px 0px #ef4444;
+}
+
+.theme-playful-pop .slide-visual-wrapper {
+    border-radius: 20px 40px 30px 50px;
+}
+
+/* Deco 1: Red Circle */
+.theme-playful-pop .theme-deco-slide-1 {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 200px;
+    height: 200px;
+    background: #ef4444;
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Deco 2: Squiggle (simulated with border-radius) */
+.theme-playful-pop .theme-deco-slide-2 {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    width: 300px;
+    height: 100px;
+    background: #22c55e; /* Green */
+    border-radius: 50px;
+    transform: rotate(10deg);
+    z-index: 0;
+    pointer-events: none;
+}

@@ -1,0 +1,69 @@
+
+.theme-swiss-minimal {
+    background-color: #ffffff;
+    color: #111111;
+    text-align: left;
+    /* Grid Pattern */
+    background-image: 
+        linear-gradient(#f0f0f0 1px, transparent 1px),
+        linear-gradient(90deg, #f0f0f0 1px, transparent 1px);
+    background-size: 40px 40px;
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: #FF3B30; /* International Red */
+}
+
+/* Swiss Style Badge - Bold Red with Hard Shadow */
+.theme-swiss-minimal .badge {
+    background-color: #FF3B30; /* International Red */
+    color: white;
+    font-weight: 700;
+    border-radius: 0; /* Square edges */
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    /* Hard Shadow with Pulse (Scaling Offsets) */
+    box-shadow: 
+        calc(4px * var(--badge-shadow-scale, 1)) calc(4px * var(--badge-shadow-scale, 1)) 0px rgba(0, 0, 0, 0.1);
+}
+
+.theme-swiss-minimal .slide-title {
+    color: #000000;
+    letter-spacing: -0.04em; /* Tight typography */
+}
+
+.theme-swiss-minimal .slide-description {
+    color: #444444;
+    border-left: 4px solid #111;
+    padding-left: 1.5rem;
+}
+
+/* Clean Image */
+.theme-swiss-minimal .slide-image {
+    box-sizing: border-box;
+    border-radius: 0;
+    filter: none;
+    outline: none;
+    padding: 0;
+    background: transparent;
+    box-shadow: 20px 20px 0px #111;
+}
+
+.theme-swiss-minimal .slide-visual-wrapper {
+    border-radius: 0;
+}
+
+/* Deco: Giant Typography Elements or Shapes */
+.theme-swiss-minimal .theme-deco-slide-1 {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 300px;
+    height: 300px;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.theme-swiss-minimal .theme-deco-slide-2 {
+    display: none;
+}

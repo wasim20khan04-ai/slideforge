@@ -1,0 +1,81 @@
+
+.theme-voltage-strike {
+    background-color: #f8fafc; /* Slate-50 */
+    background-image: 
+        linear-gradient(110deg, #f8fafc 60%, #f1f5f9 60%);
+    color: #0f172a;
+    text-align: left;
+    position: relative;
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: #eab308; /* Yellow-500 */
+}
+
+/* High Voltage Badge */
+.theme-voltage-strike .badge {
+    background: #eab308;
+    color: #000;
+    font-weight: 900;
+    text-transform: uppercase;
+    border: none;
+    transform: skew(-10deg);
+    border-radius: 2px;
+    /* Hard yellow glow */
+    box-shadow: 
+        calc(5px * var(--badge-shadow-scale, 1)) calc(5px * var(--badge-shadow-scale, 1)) 0px rgba(0, 0, 0, 0.1),
+        0 0 calc(20px * var(--badge-shadow-scale, 1)) rgba(234, 179, 8, 0.4);
+}
+
+.theme-voltage-strike .slide-title {
+    text-transform: uppercase;
+    font-style: italic;
+    text-shadow: 4px 4px 0px #e2e8f0;
+}
+
+.theme-voltage-strike .slide-description {
+    color: #334155;
+    background: rgba(255,255,255,0.8);
+    padding: 10px;
+    border-left: 4px solid #eab308;
+}
+
+/* Sharp Angled Image */
+.theme-voltage-strike .slide-image {
+    clip-path: polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%);
+    filter: contrast(1.1) grayscale(0.1);
+    box-shadow: none; /* clip-path hides box-shadow, handled by deco */
+}
+
+.theme-voltage-strike .slide-visual-wrapper {
+    /* Create a backing for the clip-path image */
+    background: #eab308;
+    padding: 4px;
+    clip-path: polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%);
+}
+
+/* Deco 1: Lightning Bolt Shape */
+.theme-voltage-strike .theme-deco-slide-1 {
+    position: absolute;
+    top: 0;
+    right: 20%;
+    width: 100px;
+    height: 100%;
+    background: rgba(234, 179, 8, 0.2);
+    transform: skew(-20deg);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Deco 2: Spark */
+.theme-voltage-strike .theme-deco-slide-2 {
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    width: 200px;
+    height: 10px;
+    background: #eab308;
+    box-shadow: 0 0 20px #eab308;
+    transform: rotate(-45deg);
+    z-index: 0;
+    pointer-events: none;
+}

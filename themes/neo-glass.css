@@ -1,0 +1,70 @@
+
+/* ============================================
+   File: neo-glass.css (Light Mode)
+   ============================================ */
+.theme-neo-glass {
+    background-color: #f8f9fc;
+    /* Light abstract background */
+    background-image: 
+        radial-gradient(at 0% 0%, hsla(253, 30%, 96%, 1) 0, transparent 50%), 
+        radial-gradient(at 50% 0%, hsla(225, 60%, 93%, 1) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, hsla(339, 60%, 94%, 1) 0, transparent 50%);
+    color: #1a1a2e;
+    text-align: left;
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: rgba(100, 80, 160, 0.5); /* Semi-transparent Purple */
+}
+
+/* Glassmorphism Badge with Violet/White Glow */
+.theme-neo-glass .badge {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: rgba(30, 30, 60, 0.9);
+    /* Glassy Glow with Pulse */
+    box-shadow: 
+        0 0 calc(20px * var(--badge-shadow-scale, 1)) rgba(139, 92, 246, 0.15), 
+        inset 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.theme-neo-glass .slide-description {
+    color: rgba(30, 30, 60, 0.6);
+}
+
+/* Smooth rounded image */
+.theme-neo-glass .slide-image {
+    box-sizing: content-box;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.theme-neo-glass .slide-visual-wrapper {
+    border-radius: 16px;
+}
+
+/* Deco 1: Glowing orb behind text */
+.theme-neo-glass .theme-deco-slide-1 {
+    position: absolute;
+    left: 10%;
+    top: 30%;
+    width: 400px;
+    height: 400px;
+    background: rgba(139, 92, 246, 0.1); /* Soft Purple */
+    filter: blur(100px);
+    z-index: 0;
+}
+
+/* Deco 2: Glowing orb behind image */
+.theme-neo-glass .theme-deco-slide-2 {
+    position: absolute;
+    right: 10%;
+    bottom: 20%;
+    width: 500px;
+    height: 500px;
+    background: rgba(56, 189, 248, 0.1); /* Soft Cyan */
+    filter: blur(120px);
+    z-index: 0;
+}

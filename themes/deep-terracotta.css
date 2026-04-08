@@ -1,0 +1,77 @@
+
+/* ============================================
+   File: deep-terracotta.css (Light Mode)
+   ============================================ */
+.theme-deep-terracotta {
+    background-color: #fef7f0; /* Warm light cream */
+    background-image: radial-gradient(circle at 50% 100%, #fff7ed 0%, #fef3e2 100%);
+    color: #431407; /* Dark warm brown */
+    text-align: left;
+    position: relative;
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: #ea580c; /* Orange-600 */
+}
+
+/* Earthy Rounded Badge */
+.theme-deep-terracotta .badge {
+    background-color: #fed7aa;
+    color: #9a3412;
+    border: none;
+    border-radius: 12px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    /* Warm glow */
+    box-shadow: 0 4px calc(15px * var(--badge-shadow-scale, 1)) rgba(234, 88, 12, 0.15);
+}
+
+.theme-deep-terracotta .slide-title {
+    color: #431407;
+    text-shadow: none;
+}
+
+.theme-deep-terracotta .slide-description {
+    color: #c2410c; /* Orange-700 */
+    font-weight: 300;
+}
+
+/* Organic Image Shape */
+.theme-deep-terracotta .slide-image {
+    box-sizing: content-box;
+    border-radius: 40px 4px 40px 4px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(67, 20, 7, 0.06);
+}
+
+.theme-deep-terracotta .slide-visual-wrapper {
+    border-radius: 40px 4px 40px 4px;
+}
+
+/* Deco 1: Large Earth Circle */
+.theme-deep-terracotta .theme-deco-slide-1 {
+    position: absolute;
+    top: 50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: #fed7aa;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    opacity: 0.3;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Deco 2: Texture Dots */
+.theme-deep-terracotta .theme-deco-slide-2 {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 200px;
+    height: 200px;
+    background-image: radial-gradient(#c2410c 20%, transparent 20%);
+    background-size: 20px 20px;
+    opacity: 0.06;
+    z-index: 0;
+    pointer-events: none;
+}

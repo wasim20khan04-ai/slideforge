@@ -1,0 +1,213 @@
+
+/* Base Animation Configuration */
+.anim-content {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  
+  .anim-outro-wrapper {
+      animation-duration: 1s;
+      animation-fill-mode: both;
+      animation-timing-function: ease-in;
+  }
+  
+  /* --- INTRO ANIMATIONS --- */
+  
+  /* 1. Fade */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .anim-fade { animation-name: fadeIn; }
+  
+  /* 2. Slide Up */
+  @keyframes slideUp { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
+  .anim-slide-up { animation-name: slideUp; }
+  
+  /* 3. Slide Down */
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-60px); } to { opacity: 1; transform: translateY(0); } }
+  .anim-slide-down { animation-name: slideDown; }
+  
+  /* 4. Slide Left */
+  @keyframes slideLeft { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
+  .anim-slide-left { animation-name: slideLeft; }
+  
+  /* 5. Slide Right */
+  @keyframes slideRight { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+  .anim-slide-right { animation-name: slideRight; }
+  
+  /* 6. Zoom In */
+  @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+  .anim-zoom-in { animation-name: zoomIn; }
+  
+  /* 7. Zoom Out */
+  @keyframes zoomOut { from { opacity: 0; transform: scale(1.1); } to { opacity: 1; transform: scale(1); } }
+  .anim-zoom-out { animation-name: zoomOut; }
+  
+  /* 8. Rotate In */
+  @keyframes rotateIn { from { opacity: 0; transform: rotate(-5deg) scale(0.95); } to { opacity: 1; transform: rotate(0) scale(1); } }
+  .anim-rotate-in { animation-name: rotateIn; }
+  
+  /* 9. Blur In */
+  @keyframes blurIn { from { opacity: 0; filter: blur(20px); } to { opacity: 1; filter: blur(0); } }
+  .anim-blur-in { animation-name: blurIn; }
+  
+  /* 10. Elastic Up */
+  @keyframes elasticUp { 
+    0% { opacity: 0; transform: translateY(100px); } 
+    60% { transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); } 
+  }
+  .anim-elastic-up { animation-name: elasticUp; }
+  
+  
+  /* --- OUTRO ANIMATIONS (Reverses) --- */
+  
+  /* 1. Fade Out */
+  @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+  .anim-fade-out { animation-name: fadeOut; }
+  
+  /* 2. Slide Up Out (Move up and vanish) */
+  @keyframes slideUpOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-60px); } }
+  .anim-slide-up-out { animation-name: slideUpOut; }
+  
+  /* 3. Slide Down Out */
+  @keyframes slideDownOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(60px); } }
+  .anim-slide-down-out { animation-name: slideDownOut; }
+  
+  /* 4. Slide Left Out (Move left and vanish) */
+  @keyframes slideLeftOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-60px); } }
+  .anim-slide-left-out { animation-name: slideLeftOut; }
+  
+  /* 5. Slide Right Out */
+  @keyframes slideRightOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(60px); } }
+  .anim-slide-right-out { animation-name: slideRightOut; }
+  
+  /* 6. Zoom In Out (Scale up and vanish) */
+  @keyframes zoomInOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(1.1); } }
+  .anim-zoom-in-out { animation-name: zoomInOut; }
+  
+  /* 7. Zoom Out Out (Scale down and vanish) */
+  @keyframes zoomOutOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.9); } }
+  .anim-zoom-out-out { animation-name: zoomOutOut; }
+  
+  /* 8. Rotate Out */
+  @keyframes rotateOut { from { opacity: 1; transform: rotate(0) scale(1); } to { opacity: 0; transform: rotate(5deg) scale(0.95); } }
+  .anim-rotate-in-out { animation-name: rotateOut; }
+  
+  /* 9. Blur Out */
+  @keyframes blurOut { from { opacity: 1; filter: blur(0); } to { opacity: 0; filter: blur(20px); } }
+  .anim-blur-in-out { animation-name: blurOut; }
+  
+  /* 10. Elastic Out (Simple slide up out for now) */
+  .anim-elastic-up-out { animation-name: slideUpOut; }
+
+  /* --- CONTINUOUS ANIMATIONS --- */
+
+  /* Pulsate Wrapper - Driven by JS-controlled CSS Variable for Global Sync */
+  .pulsate-wrapper {
+    display: inline-block;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    
+    /* 
+       Controlled by --global-pulse-scale variable updated in App.tsx 
+       Default to 1 if variable not set
+    */
+    transform: scale3d(var(--global-pulse-scale, 1), var(--global-pulse-scale, 1), 1);
+    
+    transform-origin: left center;
+  }
+  
+  /* Adjust origin for centered layouts */
+  .text-center .pulsate-wrapper {
+    transform-origin: center center;
+  }
+
+  /* Rasterize text to prevent re-rendering jitter */
+  .pulsate-wrapper .slide-title {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* --- BADGE GLOW PULSE (Global) --- */
+  /* Uses Houdini API for smooth property interpolation in compatible browsers */
+  @property --badge-shadow-scale {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 1;
+  }
+  
+  @keyframes badgeGlowPulse {
+    0%, 100% { --badge-shadow-scale: 1; }
+    50% { --badge-shadow-scale: 1.5; } /* 50% larger shadow/glow at peak */
+  }
+  
+  .badge {
+    /* Global pulse: 2s up + 2s down = 4s total */
+    animation: badgeGlowPulse 4s ease-in-out infinite;
+  }
+
+/* --- Global Slide Image Ripple Effect --- */
+@keyframes globalRipple {
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+        border-width: 3px;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+        border-width: 0px;
+    }
+}
+
+.slide-visual-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Wrapper needs to match image shape for effects to look right */
+    border-radius: inherit; 
+}
+
+.slide-image-effect {
+    /* Use the theme's defined accent color, fallback to white */
+    border: 3px solid var(--slide-accent-color, rgba(255, 255, 255, 0.5));
+    /* Force rounded corners globally, overriding inheritance from sharp themes */
+    border-radius: 55px;
+    
+    animation: globalRipple 3s linear infinite;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.slide-image-effect.effect-1 { animation-delay: 0s; }
+.slide-image-effect.effect-2 { animation-delay: 1s; }
+.slide-image-effect.effect-3 { animation-delay: 2s; }
+
+/* Ensure image stays on top */
+.slide-image {
+    position: relative;
+    z-index: 10;
+}
+
+/* Custom Scrollbar for Dropdowns */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}

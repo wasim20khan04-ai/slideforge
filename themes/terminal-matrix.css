@@ -1,0 +1,91 @@
+
+.theme-terminal-matrix {
+    background-color: #ffffff;
+    color: #166534; /* Green-800 */
+    text-align: left;
+    position: relative;
+    font-family: 'Courier New', monospace; /* Fallback if typography not set */
+
+    /* Global Variable for Pulse Effect */
+    --slide-accent-color: #166534;
+}
+
+/* Grid Overlay */
+.theme-terminal-matrix::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(22, 101, 52, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(22, 101, 52, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Prompt Badge */
+.theme-terminal-matrix .badge {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #166534;
+    border-radius: 0;
+    font-family: monospace;
+    /* Digital Glow */
+    box-shadow: 0 0 calc(10px * var(--badge-shadow-scale, 1)) rgba(22, 101, 52, 0.2);
+}
+
+.theme-terminal-matrix .badge::before {
+    content: "> ";
+}
+
+.theme-terminal-matrix .slide-title {
+    text-shadow: 0 0 10px rgba(22, 101, 52, 0.2);
+}
+
+.theme-terminal-matrix .slide-description {
+    color: #14532d; /* Green-900 */
+    background: rgba(240, 253, 244, 0.8);
+    padding: 10px;
+    border-left: 4px solid #166534;
+}
+
+/* Retro Monitor Image */
+.theme-terminal-matrix .slide-image {
+    box-sizing: content-box;
+    border: 2px solid #166534;
+    border-radius: 4px;
+    /* Filter removed to show original colors */
+    box-shadow: 0 0 20px rgba(22, 101, 52, 0.1);
+}
+
+.theme-terminal-matrix .slide-visual-wrapper {
+    border-radius: 4px;
+}
+
+/* Deco 1: Scanline (simulated with gradient) */
+.theme-terminal-matrix .theme-deco-slide-1 {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0) 50%, rgba(22,101,52,0.05) 50%, rgba(22,101,52,0.05));
+    background-size: 100% 4px;
+    z-index: 100; /* On top of everything */
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Deco 2: Blinking Cursor Block (Static visual representation) */
+.theme-terminal-matrix .theme-deco-slide-2 {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 20px;
+    height: 40px;
+    background: #166534;
+    animation: terminalBlink 1s infinite;
+    z-index: 0;
+}
+
+@keyframes terminalBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
