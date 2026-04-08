@@ -36,7 +36,8 @@ const HiddenExportRenderer = React.forwardRef<HTMLDivElement, HiddenExportRender
                     key={`export-${slide.id}-${renderNonce}`}
                     data={slide} 
                     scale={1} 
-                    progress={progress} 
+                    progress={progress}
+                    exportMode={true}
                 />
             </div>
         </div>

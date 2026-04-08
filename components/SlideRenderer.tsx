@@ -7,13 +7,15 @@ interface SlideRendererProps {
   scale?: number;
   animate?: boolean;
   progress?: number; // 0 to 100
+  exportMode?: boolean;
 }
 
 const SlideRenderer: React.FC<SlideRendererProps> = ({ 
     data, 
     scale = 1, 
     animate = true, 
-    progress = 0 
+    progress = 0,
+    exportMode = false
 }) => {
   const { 
     theme, 
@@ -66,6 +68,63 @@ const SlideRenderer: React.FC<SlideRendererProps> = ({
   // --- Animation Logic ---
   const durationSeconds = data.duration || 5;
   const currentSeconds = durationSeconds * (progress / 100);
+  const useStaticExportInterpolation = exportMode && animate;
+  const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+
+  const getPhaseProgress = (type: 'intro' | 'outro', durationVal: number) => {
+    if (!animate) return 1;
+    if (durationVal <= 0) return 1;
+    if (type === 'intro') return clamp01(currentSeconds / durationVal);
+    const outroStart = Math.max(0, durationSeconds - durationVal);
+    return clamp01((currentSeconds - outroStart) / durationVal);
+  };
+
+  const getStaticTransitionStyle = (
+    transition: string,
+    type: 'intro' | 'outro',
+    pRaw: number
+  ): React.CSSProperties => {
+    const p = clamp01(pRaw);
+    if (transition === 'none') return {};
+
+    if (type === 'intro') {
+      switch (transition) {
+        case 'fade': return { opacity: p };
+        case 'slide-up': return { opacity: p, transform: `translateY(${(1 - p) * 60}px)` };
+        case 'slide-down': return { opacity: p, transform: `translateY(${-(1 - p) * 60}px)` };
+        case 'slide-left': return { opacity: p, transform: `translateX(${(1 - p) * 60}px)` };
+        case 'slide-right': return { opacity: p, transform: `translateX(${-(1 - p) * 60}px)` };
+        case 'zoom-in': return { opacity: p, transform: `scale(${0.9 + 0.1 * p})` };
+        case 'zoom-out': return { opacity: p, transform: `scale(${1.1 - 0.1 * p})` };
+        case 'rotate-in': return { opacity: p, transform: `rotate(${(-5 * (1 - p)).toFixed(3)}deg) scale(${(0.95 + 0.05 * p).toFixed(5)})` };
+        case 'blur-in': return { opacity: p, filter: `blur(${((1 - p) * 20).toFixed(3)}px)` };
+        case 'elastic-up': {
+          if (p <= 0.6) {
+            const t = p / 0.6;
+            return { opacity: p, transform: `translateY(${(100 - 120 * t).toFixed(3)}px)` };
+          }
+          const t = (p - 0.6) / 0.4;
+          return { opacity: p, transform: `translateY(${(-20 + 20 * t).toFixed(3)}px)` };
+        }
+        default: return {};
+      }
+    }
+
+    // Outro styles
+    switch (transition) {
+      case 'fade': return { opacity: 1 - p };
+      case 'slide-up': return { opacity: 1 - p, transform: `translateY(${(-60 * p).toFixed(3)}px)` };
+      case 'slide-down': return { opacity: 1 - p, transform: `translateY(${(60 * p).toFixed(3)}px)` };
+      case 'slide-left': return { opacity: 1 - p, transform: `translateX(${(-60 * p).toFixed(3)}px)` };
+      case 'slide-right': return { opacity: 1 - p, transform: `translateX(${(60 * p).toFixed(3)}px)` };
+      case 'zoom-in': return { opacity: 1 - p, transform: `scale(${(1 + 0.1 * p).toFixed(5)})` };
+      case 'zoom-out': return { opacity: 1 - p, transform: `scale(${(1 - 0.1 * p).toFixed(5)})` };
+      case 'rotate-in': return { opacity: 1 - p, transform: `rotate(${(5 * p).toFixed(3)}deg) scale(${(1 - 0.05 * p).toFixed(5)})` };
+      case 'blur-in': return { opacity: 1 - p, filter: `blur(${(20 * p).toFixed(3)}px)` };
+      case 'elastic-up': return { opacity: 1 - p, transform: `translateY(${(-60 * p).toFixed(3)}px)` };
+      default: return {};
+    }
+  };
   
   const getControlledAnimationStyle = (baseDelayMs: number, type: 'intro' | 'outro' = 'intro', durationVal: number = 1): React.CSSProperties => {
     if (!animate) return {};
@@ -102,7 +161,7 @@ const SlideRenderer: React.FC<SlideRendererProps> = ({
   };
 
   const getAnimationClass = (transition: string, type: 'intro' | 'outro') => {
-    if (!animate || transition === 'none') return '';
+    if (!animate || transition === 'none' || useStaticExportInterpolation) return '';
     return `anim-${transition}${type === 'outro' ? '-out' : ''}`;
   };
 
@@ -133,20 +192,28 @@ const SlideRenderer: React.FC<SlideRendererProps> = ({
   };
   
   const textIntroStyle: React.CSSProperties = {
-      ...getControlledAnimationStyle(0, 'intro', textTransitionDuration),
+      ...(useStaticExportInterpolation
+        ? getStaticTransitionStyle(textTransition, 'intro', getPhaseProgress('intro', textTransitionDuration))
+        : getControlledAnimationStyle(0, 'intro', textTransitionDuration)),
       ...getVisibilityStyle(isFirstFrame, skipTextEnterVisibility)
   };
   const textOutroStyle: React.CSSProperties = {
-      ...getControlledAnimationStyle(0, 'outro', textOutroDuration),
+      ...(useStaticExportInterpolation
+        ? getStaticTransitionStyle(textOutroTransition, 'outro', getPhaseProgress('outro', textOutroDuration))
+        : getControlledAnimationStyle(0, 'outro', textOutroDuration)),
       ...getVisibilityStyle(isLastFrame, skipTextExitVisibility)
   };
   
   const imgIntroStyle: React.CSSProperties = {
-      ...getControlledAnimationStyle(0, 'intro', imageTransitionDuration),
+      ...(useStaticExportInterpolation
+        ? getStaticTransitionStyle(imageTransition, 'intro', getPhaseProgress('intro', imageTransitionDuration))
+        : getControlledAnimationStyle(0, 'intro', imageTransitionDuration)),
       ...getVisibilityStyle(isFirstFrame, skipImageEnterVisibility)
   };
   const imgOutroStyle: React.CSSProperties = {
-      ...getControlledAnimationStyle(0, 'outro', imageOutroDuration),
+      ...(useStaticExportInterpolation
+        ? getStaticTransitionStyle(imageOutroTransition, 'outro', getPhaseProgress('outro', imageOutroDuration))
+        : getControlledAnimationStyle(0, 'outro', imageOutroDuration)),
       ...getVisibilityStyle(isLastFrame, skipImageExitVisibility)
   };
 
@@ -179,8 +246,8 @@ const SlideRenderer: React.FC<SlideRendererProps> = ({
 
   // Text container classes
   const textContainerClasses = isTextOnly
-    ? `w-full z-10 flex flex-col justify-center items-center text-center anim-outro-wrapper ${textOutroClass}`
-    : `flex-1 z-10 flex flex-col justify-center items-start text-left anim-outro-wrapper ${textOutroClass}`;
+    ? `w-full z-10 flex flex-col justify-center items-center text-center ${useStaticExportInterpolation ? '' : `anim-outro-wrapper ${textOutroClass}`}`
+    : `flex-1 z-10 flex flex-col justify-center items-start text-left ${useStaticExportInterpolation ? '' : `anim-outro-wrapper ${textOutroClass}`}`;
     
   // Badge alignment for text-only
   const badgeClasses = isTextOnly 
@@ -203,7 +270,7 @@ const SlideRenderer: React.FC<SlideRendererProps> = ({
         <>
             {/* Text Section */}
             <div className={textContainerClasses} style={textOutroStyle}>
-                <div className={`anim-content w-full ${textIntroClass}`} style={textIntroStyle}>
+                <div className={`${useStaticExportInterpolation ? '' : 'anim-content'} w-full ${textIntroClass}`} style={textIntroStyle}>
                     <span 
                         className={badgeClasses} 
                         style={{ fontSize: badgeFontSize ? `${badgeFontSize}px` : 'var(--slide-badge-size)' }}
@@ -229,8 +296,8 @@ const SlideRenderer: React.FC<SlideRendererProps> = ({
 
             {/* Image Section - Only render if not text-only */}
             {!isTextOnly && (
-                <div className={`flex-1 flex justify-center items-center relative z-10 h-full anim-outro-wrapper ${imgOutroClass}`} style={imgOutroStyle}>
-                    <div className={`w-full h-full flex items-center justify-center anim-content ${imgIntroClass}`} style={imgIntroStyle}>
+                <div className={`flex-1 flex justify-center items-center relative z-10 h-full ${useStaticExportInterpolation ? '' : `anim-outro-wrapper ${imgOutroClass}`}`} style={imgOutroStyle}>
+                    <div className={`w-full h-full flex items-center justify-center ${useStaticExportInterpolation ? '' : 'anim-content'} ${imgIntroClass}`} style={imgIntroStyle}>
                         {/* Visual Wrapper for Effects */}
                         <div className="slide-visual-wrapper relative flex justify-center items-center">
                               <img 
