@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { flushSync } from 'react-dom';
 import { SlideData, ExportJob } from '../types';
 import * as Mp4Muxer from 'mp4-muxer';
 import { toCanvas } from 'html-to-image';
@@ -28,12 +29,76 @@ export const useExportManager = (
     const [exportProgressStatus, setExportProgressStatus] = useState(0);
     const [exportingSlide, setExportingSlide] = useState<SlideData | null>(null);
     const [exportRenderProgress, setExportRenderProgress] = useState(0);
+    const [exportRenderNonce, setExportRenderNonce] = useState(0);
     
     // Logging State
     const [exportLogs, setExportLogs] = useState<string[]>([]);
 
     const addLog = (msg: string) => {
         setExportLogs(prev => [...prev, `[${new Date().toLocaleTimeString()}] ${msg}`]);
+    };
+
+    const sleep = (ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms));
+
+    const waitForPaint = () =>
+        new Promise<void>(resolve => {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => resolve());
+            });
+        });
+
+    const waitForFontsReady = async () => {
+        const fontSet = (document as Document & { fonts?: { ready: Promise<unknown> } }).fonts;
+        if (!fontSet?.ready) return;
+        await Promise.race([fontSet.ready, sleep(2000)]);
+    };
+
+    const waitForImagesReady = async (container: HTMLDivElement) => {
+        const images = Array.from(container.querySelectorAll('img')) as HTMLImageElement[];
+        if (images.length === 0) return;
+
+        await Promise.all(
+            images.map(async (img) => {
+                if (img.complete && img.naturalWidth > 0) return;
+
+                // Prefer decode when available to guarantee pixels are ready.
+                if (typeof img.decode === 'function') {
+                    await Promise.race([img.decode().catch(() => undefined), sleep(1500)]);
+                    return;
+                }
+
+                await new Promise<void>((resolve) => {
+                    let settled = false;
+                    const done = () => {
+                        if (settled) return;
+                        settled = true;
+                        img.removeEventListener('load', done);
+                        img.removeEventListener('error', done);
+                        resolve();
+                    };
+                    img.addEventListener('load', done, { once: true });
+                    img.addEventListener('error', done, { once: true });
+                    setTimeout(done, 1500);
+                });
+            })
+        );
+    };
+
+    const waitForSlideAssetsReady = async (container: HTMLDivElement) => {
+        await waitForPaint();
+        await waitForFontsReady();
+        await waitForImagesReady(container);
+        await waitForPaint();
+    };
+
+    const waitForEncoderCapacity = async (encoder: VideoEncoder, maxQueue = 2) => {
+        let checks = 0;
+        while (encoder.encodeQueueSize > maxQueue) {
+            await waitForPaint();
+            checks++;
+            // Fail-open after ~240 frames to avoid export deadlock in rare browser stalls.
+            if (checks > 240) break;
+        }
     };
 
     const openExportModal = (scope: 'current' | 'all') => {
@@ -172,10 +237,18 @@ export const useExportManager = (
             addLog(`Total Frames to render: ${totalExportFrames}`);
 
             for (const slide of cfgSlides) {
-                setExportingSlide(slide);
+                flushSync(() => {
+                    setExportingSlide(slide);
+                    setExportRenderProgress(0);
+                    setExportRenderNonce(prev => prev + 1);
+                });
                 addLog(`Mounting Slide: ${slide.badge} (${slide.title})...`);
-                // Wait for React to render the new slide in the hidden container
-                await new Promise(r => setTimeout(r, 250));
+                // Wait for React and asset readiness before first frame of this slide.
+                if (exportContainerRef.current) {
+                    await waitForSlideAssetsReady(exportContainerRef.current);
+                } else {
+                    await waitForPaint();
+                }
 
                 const duration = slide.duration || 5;
                 const frames = Math.ceil(duration * FPS);
@@ -184,18 +257,12 @@ export const useExportManager = (
 
                 for (let i = 0; i < frames; i++) {
                     const prog = (frames > 1) ? (i / (frames - 1)) * 100 : 0;
-                    setExportRenderProgress(prog);
-                    
-                    // Use (globalFrameCount - 1) for progress calculation to start at 0%
-                    setExportProgressStatus(Math.round(((globalFrameCount - 1) / totalExportFrames) * 100));
-                    
-                    // Force React to commit, and force browser to paint the new animation state
-                    // This is CRITICAL for paused CSS animations to update their visual state
-                    await new Promise(r => {
-                        requestAnimationFrame(() => {
-                            requestAnimationFrame(r);
-                        });
+                    flushSync(() => {
+                        setExportRenderProgress(prog);
+                        // Use (globalFrameCount - 1) for progress calculation to start at 0%
+                        setExportProgressStatus(Math.round(((globalFrameCount - 1) / totalExportFrames) * 100));
                     });
+                    await waitForPaint();
 
                     if (exportContainerRef.current) {
                         try {
@@ -218,6 +285,7 @@ export const useExportManager = (
                             });
 
                             if (cfgFormat === 'mp4' && videoEncoder) {
+                                await waitForEncoderCapacity(videoEncoder);
                                 // Ensure timestamp starts at 0 for the video stream
                                 // (globalFrameCount - 1) ensures the first frame is at timestamp 0
                                 const timestamp = ((globalFrameCount - 1) * 1e6) / FPS;
@@ -228,7 +296,10 @@ export const useExportManager = (
                                 // FIX: Insert Keyframe every 2 seconds to ensure seekability
                                 // FPS * 2 means one keyframe every 2 seconds.
                                 const keyFrameInterval = FPS * 2;
-                                const shouldBeKeyFrame = (globalFrameCount - 1) % keyFrameInterval === 0;
+                                const shouldBeKeyFrame = i === 0 || (globalFrameCount - 1) % keyFrameInterval === 0;
+                                if (i === 0) {
+                                    addLog(`Forcing slide-boundary keyframe: ${slide.badge}`);
+                                }
 
                                 videoEncoder.encode(frame, { keyFrame: shouldBeKeyFrame });
                                 frame.close();
@@ -350,6 +421,7 @@ export const useExportManager = (
         exportProgressStatus,
         exportingSlide,
         exportRenderProgress,
+        exportRenderNonce,
         exportLogs, // NEW
         // Actions
         openExportModal,

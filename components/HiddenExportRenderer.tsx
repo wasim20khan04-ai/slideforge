@@ -6,10 +6,11 @@ import { SlideData } from '../types';
 interface HiddenExportRendererProps {
     slide: SlideData | null;
     progress: number;
+    renderNonce: number;
 }
 
 // Forward ref to allow App to access the div
-const HiddenExportRenderer = React.forwardRef<HTMLDivElement, HiddenExportRendererProps>(({ slide, progress }, ref) => {
+const HiddenExportRenderer = React.forwardRef<HTMLDivElement, HiddenExportRendererProps>(({ slide, progress, renderNonce }, ref) => {
     if (!slide) return <div ref={ref} style={{ width: 1920, height: 1080 }} />;
 
     return (
@@ -32,7 +33,7 @@ const HiddenExportRenderer = React.forwardRef<HTMLDivElement, HiddenExportRender
             <div ref={ref} style={{ width: 1920, height: 1080, position: 'relative', backgroundColor: '#050505' }}>
                 <SlideRenderer 
                     // Force remount on slide change for clean animation
-                    key={`export-${slide.id}`}
+                    key={`export-${slide.id}-${renderNonce}`}
                     data={slide} 
                     scale={1} 
                     progress={progress} 

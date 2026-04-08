@@ -182,6 +182,7 @@ const App: React.FC = () => {
                 ref={hiddenExportRef} 
                 slide={exportManager.exportingSlide || currentSlide} 
                 progress={exportManager.exportRenderProgress} 
+                renderNonce={exportManager.exportRenderNonce}
             />
 
             {/* Top Navigation Bar */}
